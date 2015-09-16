@@ -49,19 +49,44 @@ public class SimpleBSTNode<ValType extends Comparable<ValType> > {
 		}
 	}
 	
-	public boolean searchVal(ValType val){
+	public SimpleBSTNode<ValType> searchVal(ValType val){
 		SimpleBSTNode<ValType> n = this;
 		while(n != null){
 			int compareResult = val.compareTo(n.val);
 			if(compareResult == 0){
-				return true;
+				return n;
 			}else if(compareResult > 0){
 				n = n.right;
 			}else if(compareResult < 0){
 				n = n.left;
 			}
 		}
-		return false;
+		return null;
+	}
+	
+	public List<SimpleBSTNode<ValType>> searchValWithParent(ValType val){
+		List<SimpleBSTNode<ValType>> l = new ArrayList<SimpleBSTNode<ValType>>();
+		SimpleBSTNode<ValType> n = this, parent = null;
+		while(n != null){
+			int compareResult = val.compareTo(n.val);
+			if(compareResult == 0){
+				if(n.times > 1){
+					n.times--;
+					return l;
+				}
+				l.add(n);
+				l.add(parent);
+				return l;
+			}else{
+				parent = n;
+				if(compareResult > 0){
+					n = n.right;
+				}else{
+					n = n.left;
+				}
+			}
+		}
+		return l;
 	}
 	
 	public List<ValType> preorder(){
@@ -84,14 +109,19 @@ public class SimpleBSTNode<ValType extends Comparable<ValType> > {
 	}
 	
 	public List<ValType> inorder(){
+		HashSet<ValType> set = new HashSet<ValType>();
 		List<ValType> l = new ArrayList<ValType>();
 		SimpleBSTNode<ValType> n = this;
 		Stack<SimpleBSTNode<ValType>> s = new Stack<SimpleBSTNode<ValType>>();
 		while(s.isEmpty() == false || n != null){
 			if(n == null){
 				n = s.pop();
+				if(set.contains(n.val)){
+					return null;
+				}
 				for(int i = 0; i < n.times; i++)
 					l.add(n.val);
+				set.add(n.val);
 				n = n.right;
 			}else{
 				s.push(n);
@@ -124,6 +154,9 @@ public class SimpleBSTNode<ValType extends Comparable<ValType> > {
 		return l;
 	}
 	
+	public List<List<ValType>> breadthFirstOrder(){
+		return null;
+	}
 	public boolean deleteVal(ValType val){
 		return false;
 	}

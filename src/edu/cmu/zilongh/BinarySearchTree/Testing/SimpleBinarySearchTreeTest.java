@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -26,14 +27,38 @@ public class SimpleBinarySearchTreeTest {
 	
 	@Test
 	public void TestBSTIntegerTree(){
-		List<Integer> l = generateRandomNumberList(10);
+		for(int i = 0; i < 10; i++){
+			List<Integer> l = generateRandomNumberList(10000);
+			SimpleBinarySearchTree<Integer> tree = new SimpleBinarySearchTree<Integer>();
+			for(Integer num : l){
+				tree.insert(num);
+			}
+			Collections.sort(l);
+			List<Integer> testResult = tree.inorder();
+			assertEquals(l,testResult);
+		}
+	}
+	
+	@Test
+	public void TestBSTRemove(){
+		//Random randomGenerator = new Random(System.currentTimeMillis());
+		Integer arr[] = new Integer[] {90, 50, 100, 25, 40, 91, 101};
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		for(Integer num : arr){
+			l.add(num);
+		}
+		
 		SimpleBinarySearchTree<Integer> tree = new SimpleBinarySearchTree<Integer>();
 		for(Integer num : l){
 			tree.insert(num);
 		}
 		Collections.sort(l);
-		List<Integer> testResult = tree.inorder();
-		assertEquals(l,testResult);
+		int idx = 5;
+		System.out.printf("removing %d\n",l.get(idx));
+		tree.remove(l.get(idx));
+		l.remove(idx);
+		List<Integer> l2 = tree.inorder();
+		assertEquals(l,l2);
 	}
 	
 	private List<Integer> generateRandomNumberList(int size){

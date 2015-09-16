@@ -3,4 +3,6 @@
 TODO: 
 - add test case on inorder, preorder, postorder traversal of SimpleBinarySearchTree
 - add String test case on inorder, preorder, postorder
-- implement remove() in SimpleBSTNode
+- fix bug in remove()
+- add BFS level traversal for easy debugging
+- add tree drawing algo for SimpleBSTNode
