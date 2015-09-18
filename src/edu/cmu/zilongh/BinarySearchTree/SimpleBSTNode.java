@@ -154,9 +154,31 @@ public class SimpleBSTNode<ValType extends Comparable<ValType> > {
 		return l;
 	}
 	
-	public List<List<ValType>> breadthFirstOrder(){
-		return null;
+	public List<List<ValType>> breadthFirstSearchLayeredOrder(){
+		LinkedList<SimpleBSTNode<ValType>> q = new LinkedList<SimpleBSTNode<ValType>>();
+		LinkedList<SimpleBSTNode<ValType>> nextQ = new LinkedList<SimpleBSTNode<ValType>>();
+		List<List<ValType>> result = new ArrayList<List<ValType>>();
+		q.add(this);
+		while(!q.isEmpty()){
+			ArrayList<ValType> l = new ArrayList<ValType>();
+			while(!q.isEmpty()){
+				SimpleBSTNode<ValType> n = q.removeFirst();
+				l.add(n.val);
+				if(n.left != null){
+					nextQ.add(n.left);
+				}
+				if(n.right != null){
+					nextQ.add(n.right);
+				}
+			}
+			result.add(l);
+			LinkedList<SimpleBSTNode<ValType>> tmp = q;
+			q = nextQ;
+			nextQ = tmp;
+		}
+		return result;
 	}
+	
 	public boolean deleteVal(ValType val){
 		return false;
 	}
